@@ -10,18 +10,20 @@ RUN mkdir -p $CONDA_DIR && \
     wget --quiet https://repo.continuum.io/miniconda/Miniconda3-4.2.12-Linux-x86_64.sh && \
     echo "c59b3dd3cad550ac7596e0d599b91e75d88826db132e4146030ef471bb434e9a *Miniconda3-4.2.12-Linux-x86_64.sh" | sha256sum -c - && \
     /bin/bash /Miniconda3-4.2.12-Linux-x86_64.sh -f -b -p $CONDA_DIR && \
-    rm Miniconda3-4.2.12-Linux-x86_64.sh
+    rm Miniconda3-4.2.12-Linux-x86_64.sh && apt-get -y install unzip build-essential cmake libatlas-base-dev gfortran \
+    libjasper-dev libgtk2.0-dev libavcodec-dev libavformat-dev \
+    libswscale-dev libjpeg-dev libpng-dev libtiff-dev libjasper-dev libv4l-dev ffmpeg
 
-ENV NB_USER keras
+ENV NB_USER deeplearning
 ENV NB_UID 1000
 
 RUN useradd -m -s /bin/bash -N -u $NB_UID $NB_USER && \
     mkdir -p $CONDA_DIR && \
-    chown keras $CONDA_DIR -R && \
+    chown deeplearning $CONDA_DIR -R && \
     mkdir -p /src && \
-    chown keras /src
+    chown deeplearning /src
 
-USER keras
+USER deeplearning
 
 # Python
 ARG python_version=3.5
@@ -29,11 +31,11 @@ ARG python_version=3.5
 RUN conda install -y python=${python_version} && \
     pip install --upgrade pip && \
     pip install tensorflow-gpu && \
-    conda install Pillow scikit-learn notebook pandas matplotlib mkl nose pyyaml six h5py && \
-    conda install theano pygpu scikit-image && \
+    conda install Pillow scikit-learn notebook pandas matplotlib mkl nose pyyaml six h5py \
+    theano pygpu scikit-image opencv tqdm xlrd && \
+    conda clean -yt && \
     pip install git+git://github.com/fchollet/keras.git && \
-    pip install mxnet-cu80 && \
-    conda clean -yt
+    pip install mxnet-cu80
 
 ADD theanorc /home/keras/.theanorc
 
