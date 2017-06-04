@@ -37,7 +37,7 @@ RUN conda install -y python=3.5 && \
     pip install git+git://github.com/fchollet/keras.git && \
     pip install mxnet-cu80
 
-ADD theanorc /home/keras/.theanorc
+ADD theanorc /home/deeplearning/.theanorc
 
 ENV PYTHONPATH='/src/:$PYTHONPATH'
 
