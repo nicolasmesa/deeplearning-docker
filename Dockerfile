@@ -28,7 +28,7 @@ USER deeplearning
 # Python
 ARG python_version=3.5
 
-RUN conda install -y python=${python_version} && \
+RUN conda install -y python=3.5 && \
     pip install --upgrade pip && \
     pip install tensorflow-gpu && \
     conda install Pillow scikit-learn notebook pandas matplotlib mkl nose pyyaml six h5py \
