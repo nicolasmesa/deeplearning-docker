@@ -32,7 +32,7 @@ RUN conda install -y python=3.5 && \
     pip install --upgrade pip && \
     pip install tensorflow-gpu && \
     conda install Pillow scikit-learn notebook pandas matplotlib mkl nose pyyaml six h5py \
-    theano pygpu scikit-image opencv tqdm xlrd && \
+    theano pygpu scikit-image opencv tqdm xlrd bcolz && \
     conda clean -yt && \
     pip install git+git://github.com/fchollet/keras.git && \
     pip install mxnet-cu80
